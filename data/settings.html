@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - Deauther Extended</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">
+            <span class="logo">⚡</span>
+            <span>Deauther Extended</span>
+        </div>
+        <div class="nav-menu">
+            <a href="/attack.html" class="nav-link">Attacks</a>
+            <a href="/settings.html" class="nav-link active">Settings</a>
+        </div>
+        <div class="nav-status">
+            <span id="connectionStatus" class="status-dot"></span>
+            <span id="clientCount">0</span> clients
+        </div>
+    </nav>
+    
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <h2>⚙️ WiFi Settings</h2>
+            </div>
+            <div class="card-body">
+                <div class="form-group">
+                    <label>AP SSID:</label>
+                    <input type="text" id="apSSID" value="Deauther" placeholder="Deauther">
+                </div>
+                <div class="form-group">
+                    <label>AP Password:</label>
+                    <input type="password" id="apPassword" value="deauther" placeholder="deauther">
+                </div>
+                <div class="form-group">
+                    <label>Channel:</label>
+                    <select id="apChannel">
+                        <option value="1">1</option>
+                        <option value="6" selected>6</option>
+                        <option value="11">11</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="hiddenAP"> Hidden SSID
+                    </label>
+                </div>
+                <button class="btn btn-primary" onclick="saveSettings()">Save Settings</button>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-header">
+                <h2>📡 Attack Settings</h2>
+            </div>
+            <div class="card-body">
+                <div class="form-group">
+                    <label>Deauth Reason:</label>
+                    <select id="deauthReason">
+                        <option value="1">1 - Unspecified</option>
+                        <option value="2">2 - Previous authentication invalid</option>
+                        <option value="3">3 - Leaving network</option>
+                        <option value="4">4 - Disassociated due to inactivity</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Beacon Channel:</label>
+                    <input type="number" id="beaconChannel" min="1" max="13" value="1">
+                </div>
+                <button class="btn btn-primary" onclick="saveAttackSettings()">Save</button>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-header">
+                <h2>💾 System</h2>
+            </div>
+            <div class="card-body">
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <span class="stat-label">Firmware</span>
+                        <span class="stat-value">v2.1</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Free Heap</span>
+                        <span class="stat-value" id="freeHeap">-</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Flash Size</span>
+                        <span class="stat-value">4MB</span>
+                    </div>
+                </div>
+                <button class="btn btn-stop" onclick="rebootDevice()">Reboot Device</button>
+                <button class="btn btn-attack" onclick="resetSettings()">Factory Reset</button>
+            </div>
+        </div>
+    </div>
+    
+    <footer class="footer">
+        <span>ESP8266 Deauther Extended</span>
+    </footer>
+    
+    <script src="functions.js"></script>
+    <script>
+        async function updateSystemInfo() {
+            const data = await apiRequest('status');
+            document.getElementById('clientCount').textContent = data.clients || 0;
+        }
+        
+        async function saveSettings() {
+            alert('Settings saved! (simulated)');
+        }
+        
+        async function saveAttackSettings() {
+            alert('Attack settings saved!');
+        }
+        
+        async function rebootDevice() {
+            if (confirm('Reboot device?')) {
+                await apiRequest('reboot');
+            }
+        }
+        
+        async function resetSettings() {
+            if (confirm('Factory reset? All settings will be lost!')) {
+                await apiRequest('reset');
+            }
+        }
+        
+        setInterval(updateSystemInfo, 2000);
+        updateSystemInfo();
+    </script>
+</body>
+</html>

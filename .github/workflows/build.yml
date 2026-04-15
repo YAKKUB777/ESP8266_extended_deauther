@@ -26,6 +26,9 @@ jobs:
     - name: Build firmware
       run: platformio run
       
+    - name: Build filesystem
+      run: platformio run --target buildfs
+      
     - name: Upload firmware
       uses: actions/upload-artifact@v4
       with:

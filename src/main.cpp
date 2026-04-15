@@ -235,7 +235,10 @@ void startWebServer() {
 }
 
 void handleRoot() {
-  handleFile("/index.html", "text/html");
+  // Перенаправлення на attack.html (як в оригінальному Deauther)
+  server.sendHeader("Location", "/attack.html", true);
+  server.send(302, "text/plain", "");
+}
 }
 
 bool handleFile(String path, String contentType) {

@@ -39,3 +39,23 @@
 
 # debug information files
 *.dwo
+# PlatformIO specific
+.pio/
+.pioenvs/
+.piolibdeps/
+
+# Build outputs
+*.bin
+*.elf
+*.hex
+*.map
+firmware-*.bin
+littlefs-*.bin
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db

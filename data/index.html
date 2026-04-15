@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Deauther Extended</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="header">
+        <h1>⚡ DEAUTHER EXTENDED ⚡</h1>
+        <p>ESP8266 Multi-Tool</p>
+    </div>
+
+    <div class="card">
+        <h2>📶 WiFi Scanner</h2>
+        <button onclick="scanWiFi()">🔍 Scan Networks</button>
+        <div id="networkList" class="network-list"></div>
+    </div>
+
+    <div class="card">
+        <h2>💀 Deauth Attack</h2>
+        <button class="attack" onclick="startDeauth()">Start Deauth</button>
+        <button class="stop" onclick="stopDeauth()">Stop Deauth</button>
+    </div>
+
+    <div class="card">
+        <h2>📡 Beacon Spam</h2>
+        <input type="text" id="beaconList" placeholder="SSID1,SSID2,SSID3" value="FreeWiFi,AndroidAP,iPhone">
+        <button class="attack" onclick="startBeacon()">Start Beacon</button>
+        <button class="stop" onclick="stopBeacon()">Stop Beacon</button>
+    </div>
+
+    <div class="card">
+        <h2>📨 Probe Flood</h2>
+        <button class="attack" onclick="startProbe()">Start Probe</button>
+        <button class="stop" onclick="stopProbe()">Stop Probe</button>
+    </div>
+
+    <div class="card">
+        <h2>💡 IR Jammer</h2>
+        <button class="attack" onclick="startIR()">Start IR</button>
+        <button class="stop" onclick="stopIR()">Stop IR</button>
+    </div>
+
+    <div class="card">
+        <h2>🛑 Emergency</h2>
+        <button class="stop" onclick="stopAll()" style="width:100%; padding:15px;">
+            ⚡ STOP ALL ⚡
+        </button>
+    </div>
+
+    <div class="status-bar" id="status">Ready</div>
+
+    <script src="script.js"></script>
+</body>
+</html>

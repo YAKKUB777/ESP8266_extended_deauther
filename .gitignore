@@ -39,7 +39,8 @@
 
 # debug information files
 *.dwo
-# PlatformIO specific
+
+# ===== PlatformIO specific =====
 .pio/
 .pioenvs/
 .piolibdeps/

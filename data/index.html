@@ -1,57 +1,185 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Deauther Extended</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E⚡%3C/text%3E%3C/svg%3E">
 </head>
 <body>
-    <div class="header">
-        <h1>⚡ DEAUTHER EXTENDED ⚡</h1>
-        <p>ESP8266 Multi-Tool</p>
+    <nav class="navbar">
+        <div class="nav-brand">
+            <span class="logo">⚡</span>
+            <span>Deauther Extended</span>
+        </div>
+        <div class="nav-menu">
+            <a href="/attack.html" class="nav-link active">Attacks</a>
+            <a href="/settings.html" class="nav-link">Settings</a>
+        </div>
+        <div class="nav-status">
+            <span id="connectionStatus" class="status-dot"></span>
+            <span id="clientCount">0</span> clients
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- WiFi Scanner Section -->
+        <div class="card">
+            <div class="card-header">
+                <h2>📶 WiFi Scanner</h2>
+                <button class="btn btn-primary" onclick="scanWiFi()">
+                    <span class="icon">🔍</span> Scan Networks
+                </button>
+            </div>
+            <div class="card-body">
+                <div id="scanProgress" class="progress-bar" style="display:none;">
+                    <div class="progress-fill"></div>
+                </div>
+                <div id="networkList" class="network-list">
+                    <div class="placeholder">Click "Scan Networks" to start</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Deauth Attack Section -->
+        <div class="card">
+            <div class="card-header">
+                <h2>💀 Deauth Attack</h2>
+                <div>
+                    <button class="btn btn-attack" id="deauthStartBtn" onclick="startDeauth()">
+                        <span class="icon">▶</span> Start
+                    </button>
+                    <button class="btn btn-stop" id="deauthStopBtn" onclick="stopDeauth()" disabled>
+                        <span class="icon">⏹</span> Stop
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="form-group">
+                    <label>Selected Target:</label>
+                    <div id="selectedTarget" class="selected-target">
+                        <span class="placeholder">No target selected</span>
+                    </div>
+                </div>
+                <div id="deauthStats" class="stats-grid" style="display:none;">
+                    <div class="stat-item">
+                        <span class="stat-label">Packets:</span>
+                        <span class="stat-value" id="deauthPacketCount">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Channel:</span>
+                        <span class="stat-value" id="deauthChannel">-</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Beacon Spam Section -->
+        <div class="card">
+            <div class="card-header">
+                <h2>📡 Beacon Spam</h2>
+                <div>
+                    <button class="btn btn-attack" id="beaconStartBtn" onclick="startBeacon()">
+                        <span class="icon">▶</span> Start
+                    </button>
+                    <button class="btn btn-stop" id="beaconStopBtn" onclick="stopBeacon()" disabled>
+                        <span class="icon">⏹</span> Stop
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="form-group">
+                    <label>SSID List (comma separated):</label>
+                    <textarea id="beaconList" rows="2" placeholder="FreeWiFi, AndroidAP, iPhone, Starbucks">FreeWiFi, AndroidAP, iPhone, Starbucks, FBI_Surveillance</textarea>
+                </div>
+                <div id="beaconStats" class="stats-grid" style="display:none;">
+                    <div class="stat-item">
+                        <span class="stat-label">Packets:</span>
+                        <span class="stat-value" id="beaconPacketCount">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">SSIDs:</span>
+                        <span class="stat-value" id="beaconCount">0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Probe Flood Section -->
+        <div class="card">
+            <div class="card-header">
+                <h2>📨 Probe Flood</h2>
+                <div>
+                    <button class="btn btn-attack" id="probeStartBtn" onclick="startProbe()">
+                        <span class="icon">▶</span> Start
+                    </button>
+                    <button class="btn btn-stop" id="probeStopBtn" onclick="stopProbe()" disabled>
+                        <span class="icon">⏹</span> Stop
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div id="probeStats" class="stats-grid" style="display:none;">
+                    <div class="stat-item">
+                        <span class="stat-label">Packets:</span>
+                        <span class="stat-value" id="probePacketCount">0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- IR Jammer Section -->
+        <div class="card">
+            <div class="card-header">
+                <h2>💡 IR Jammer</h2>
+                <div>
+                    <button class="btn btn-attack" id="irStartBtn" onclick="startIR()">
+                        <span class="icon">▶</span> Start
+                    </button>
+                    <button class="btn btn-stop" id="irStopBtn" onclick="stopIR()" disabled>
+                        <span class="icon">⏹</span> Stop
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="form-group">
+                    <label>Frequency: 38kHz (fixed)</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Emergency Stop -->
+        <div class="card emergency">
+            <button class="btn btn-emergency" onclick="stopAll()">
+                <span class="icon">🛑</span> STOP ALL ATTACKS
+            </button>
+        </div>
+
+        <!-- System Info -->
+        <div class="system-info">
+            <div class="info-item">
+                <span>Uptime:</span>
+                <span id="uptime">0s</span>
+            </div>
+            <div class="info-item">
+                <span>Free Heap:</span>
+                <span id="freeHeap">-</span>
+            </div>
+            <div class="info-item">
+                <span>Version:</span>
+                <span>v2.1 Extended</span>
+            </div>
+        </div>
     </div>
 
-    <div class="card">
-        <h2>📶 WiFi Scanner</h2>
-        <button onclick="scanWiFi()">🔍 Scan Networks</button>
-        <div id="networkList" class="network-list"></div>
-    </div>
+    <footer class="footer">
+        <span>ESP8266 Deauther Extended</span>
+        <span>|</span>
+        <span>Based on SpaceHuhn/esp8266_deauther</span>
+    </footer>
 
-    <div class="card">
-        <h2>💀 Deauth Attack</h2>
-        <button class="attack" onclick="startDeauth()">Start Deauth</button>
-        <button class="stop" onclick="stopDeauth()">Stop Deauth</button>
-    </div>
-
-    <div class="card">
-        <h2>📡 Beacon Spam</h2>
-        <input type="text" id="beaconList" placeholder="SSID1,SSID2,SSID3" value="FreeWiFi,AndroidAP,iPhone">
-        <button class="attack" onclick="startBeacon()">Start Beacon</button>
-        <button class="stop" onclick="stopBeacon()">Stop Beacon</button>
-    </div>
-
-    <div class="card">
-        <h2>📨 Probe Flood</h2>
-        <button class="attack" onclick="startProbe()">Start Probe</button>
-        <button class="stop" onclick="stopProbe()">Stop Probe</button>
-    </div>
-
-    <div class="card">
-        <h2>💡 IR Jammer</h2>
-        <button class="attack" onclick="startIR()">Start IR</button>
-        <button class="stop" onclick="stopIR()">Stop IR</button>
-    </div>
-
-    <div class="card">
-        <h2>🛑 Emergency</h2>
-        <button class="stop" onclick="stopAll()" style="width:100%; padding:15px;">
-            ⚡ STOP ALL ⚡
-        </button>
-    </div>
-
-    <div class="status-bar" id="status">Ready</div>
-
+    <script src="functions.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

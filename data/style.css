@@ -1,0 +1,71 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+    font-family: 'Courier New', monospace;
+    background: #0a0a0a;
+    color: #00ff00;
+    padding: 15px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+.header {
+    text-align: center;
+    padding: 20px;
+    border-bottom: 2px solid #00ff00;
+    margin-bottom: 20px;
+}
+.header h1 { color: #ff0000; font-size: 28px; }
+.card {
+    background: #1a1a1a;
+    border: 1px solid #00ff00;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+}
+.card h2 {
+    color: #00ffff;
+    font-size: 18px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #333;
+    padding-bottom: 5px;
+}
+button {
+    background: #00ff00;
+    color: #000;
+    border: none;
+    padding: 10px 15px;
+    margin: 5px;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    font-family: inherit;
+}
+button.stop { background: #ff0000; color: #fff; }
+button.attack { background: #ff8800; color: #000; }
+input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    background: #000;
+    color: #00ff00;
+    border: 1px solid #00ff00;
+    border-radius: 5px;
+    font-family: inherit;
+}
+.status-bar {
+    background: #1a1a1a;
+    padding: 10px;
+    text-align: center;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+.network-list {
+    max-height: 300px;
+    overflow-y: auto;
+}
+.network-item {
+    padding: 8px;
+    border-bottom: 1px solid #333;
+    cursor: pointer;
+}
+.network-item:hover { background: #2a2a2a; }
+.network-item.selected { background: #004400; }

@@ -235,11 +235,21 @@ void startWebServer() {
 }
 
 void handleRoot() {
-  // Перенаправлення на attack.html (як в оригінальному Deauther)
-  server.sendHeader("Location", "/attack.html", true);
-  server.send(302, "text/plain", "");
-}
-}
+  // Перенаправлення на attack.html (професійний інтерфейс)
+  if (LittleFS.exists("/attack.html")) {
+    handleFile("/attack.html", "text/html");
+  } else if (LittleFS.exists("/index.html")) {
+    handleFile("/index.html", "text/html");
+  } else {
+    String html = "<!DOCTYPE html><html><head><title>Deauther</title></head>";
+    html += "<body style='background:#000;color:#0f0;font-family:monospace;padding:20px;'>";
+    html += "<h1>Deauther API Active</h1>";
+    html += "<p>Upload data folder for web interface.</p>";
+    html += "<p>API: <a href='/api?cmd=status' style='color:#0f0;'>/api?cmd=status</a></p>";
+    html += "</body></html>";
+    server.send(200, "text/html", html);
+  }
+}  // ← ТІЛЬКИ ОДНА закриваюча дужка!
 
 bool handleFile(String path, String contentType) {
   if (path.endsWith("/")) path += "index.html";
